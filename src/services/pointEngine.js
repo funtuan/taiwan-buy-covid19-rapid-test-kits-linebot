@@ -74,7 +74,7 @@ class PointEngine {
     })
 
     return _.uniqBy(allHistory, 'code')
-        .slice(start, limit)
+        .slice(start, start + limit)
         .map((one) => {
           return points.find((o) => o.code === one.code)
         })
@@ -86,7 +86,7 @@ class PointEngine {
   }) {
     return points
         .filter((one) => one.quantity > 0)
-        .slice(start, limit)
+        .slice(start, start + limit)
   }
 
   findOneByCode(code) {
@@ -94,7 +94,7 @@ class PointEngine {
   }
 
   findByLocation(lat, lng, {
-    limit = 10,
+    limit = 100,
     statistical = true,
     newHistory = true,
     newHistoryStart = 0,

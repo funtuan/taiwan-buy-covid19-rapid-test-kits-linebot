@@ -27,7 +27,7 @@ module.exports = async (event, {
     address: lineUserLocation.address,
     nearbyQuantity,
     start: page * 10 + 1,
-    end: page * 10 + 11,
+    end: page * 10 + 10,
     nextPage: page + 1,
   }))
 }
