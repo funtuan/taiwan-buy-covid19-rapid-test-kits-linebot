@@ -17,10 +17,11 @@ module.exports = async (event) => {
       lng: event.message.longitude,
     })
   } else {
-    await lineUserLocation.update({
+    lineUserLocation.set({
       address: event.message.address.replace(new RegExp('[0-9]*台灣'), ''),
       lat: event.message.latitude,
       lng: event.message.longitude,
     })
+    await lineUserLocation.save()
   }
 }
