@@ -1,0 +1,19 @@
+# file
+public
+npm-debug.log
+cassettes
+.DS_Store
+.tmp
+.env
+.log
+
+# folder
+data
+dist
+docs
+coverage
+node_modules
+.idea
+.nyc_output
+
+postgresql

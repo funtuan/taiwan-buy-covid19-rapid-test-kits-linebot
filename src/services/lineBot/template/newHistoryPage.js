@@ -1,0 +1,195 @@
+
+const dayjs = require('dayjs')
+
+module.exports = ({
+  address,
+  newHistory,
+  start,
+  end,
+  nextPage,
+}) => {
+  const newHistoryContent = newHistory.reduce((acc, item) => {
+    if (acc.length !== 0) {
+      acc.push({
+        'type': 'box',
+        'layout': 'vertical',
+        'contents': [
+          {
+            'type': 'spacer',
+          },
+        ],
+      })
+    }
+    const lastHistory = item.history[item.history.length - 1]
+    const secondLastHistory = item.history[item.history.length - 2]
+    const diffQuantity = secondLastHistory.quantity - lastHistory.quantity
+    const diffMinute = dayjs().diff(dayjs(lastHistory.updateDate), 'minute')
+    const diffText = diffMinute >= 60 ? `${Math.floor(diffMinute / 60)} 小時前` : `${diffMinute} 分鐘前`
+    acc.push(...[{
+      'type': 'box',
+      'layout': 'horizontal',
+      'contents': [
+        {
+          'type': 'text',
+          'text': `${Math.floor(item.distance * 1000)}公尺`,
+          'size': 'sm',
+          'color': '#999999',
+          'flex': 3,
+          'contents': [],
+        },
+        {
+          'type': 'text',
+          'text': '查看地點',
+          'size': 'sm',
+          'color': '#6289EBFF',
+          'flex': 2,
+          'align': 'end',
+          'action': {
+            'type': 'postback',
+            'label': '查看地點',
+            'text': `@查看地點 ${item.name}`,
+            'data': JSON.stringify({
+              'action': 'showLocation',
+              'name': item.name,
+              'address': item.address,
+              'lat': item.lat,
+              'lng': item.lng,
+            }),
+          },
+          'contents': [],
+        },
+      ],
+    },
+    {
+      'type': 'text',
+      'text': `${item.name}`,
+      'size': 'sm',
+      'color': '#4C4C4CFF',
+      'flex': 2,
+      'contents': [],
+    },
+    {
+      'type': 'text',
+      'text': diffQuantity > 0 ? `${diffText} 售出${diffQuantity}支（剩${item.quantity}支）` : `${diffText} 補充${-diffQuantity}支（剩${item.quantity}支）`,
+      'size': 'sm',
+      'color': diffMinute < 60 ? '#E74F4FFF' : '#999999',
+      'flex': 3,
+      'contents': [],
+    }])
+
+    return acc
+  }, [])
+
+  return {
+    'type': 'flex',
+    'altText': `即時購買記錄查詢結果：${address}`,
+    'contents': {
+      'type': 'bubble',
+      'body': {
+        'type': 'box',
+        'layout': 'vertical',
+        'contents': [
+          {
+            'type': 'box',
+            'layout': 'horizontal',
+            'contents': [
+              {
+                'type': 'text',
+                'text': address,
+                'color': '#8E8E8EFF',
+                'flex': 2,
+                'wrap': false,
+                'contents': [],
+              },
+            ],
+          },
+          {
+            'type': 'box',
+            'layout': 'vertical',
+            'contents': [
+              {
+                'type': 'spacer',
+              },
+            ],
+          },
+          {
+            'type': 'text',
+            'text': `即時購買記錄 ${start}~${end}`,
+            'weight': 'bold',
+            'size': 'xl',
+            'color': '#8DD270FF',
+            'contents': [],
+          },
+          {
+            'type': 'text',
+            'text': '附近5公里',
+            'size': 'sm',
+            'color': '#999999',
+            'flex': 0,
+            'margin': 'md',
+            'contents': [],
+          },
+          {
+            'type': 'box',
+            'layout': 'vertical',
+            'spacing': 'sm',
+            'margin': 'lg',
+            'contents': newHistoryContent.length > 0 ? newHistoryContent : [{
+              'type': 'text',
+              'text': '24小時內無最新資料',
+              'size': 'sm',
+              'color': '#AAAAAA',
+              'flex': 2,
+              'contents': [],
+            }],
+          },
+        ],
+      },
+      'footer': {
+        'type': 'box',
+        'layout': 'vertical',
+        'flex': 0,
+        'spacing': 'sm',
+        'contents': [
+          {
+            'type': 'button',
+            'action': {
+              'type': 'postback',
+              'label': '下一頁購買記錄',
+              'text': `@下一頁購買記錄`,
+              'data': JSON.stringify({
+                'action': 'newHistoryPage',
+                'page': nextPage,
+              }),
+            },
+            'height': 'sm',
+            'style': 'link',
+          },
+          {
+            'type': 'button',
+            'action': {
+              'type': 'message',
+              'label': '取得最新數據',
+              'text': `取得最新數據`,
+            },
+            'height': 'sm',
+            'style': 'link',
+          },
+          {
+            'type': 'spacer',
+            'size': 'sm',
+          },
+        ],
+      },
+    },
+    'quickReply': {
+      'items': [{
+        'type': 'action',
+        'action': {
+          'type': 'location',
+          'label': '更改查詢地點',
+        },
+      }],
+    },
+  }
+}

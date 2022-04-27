@@ -1,0 +1,29 @@
+{
+  "name": "taiwan-buy-covid19-rapid-test-kits",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src",
+  "scripts": {
+    "dev": "nodemon -i \"*.test.js\" .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-ftbackend": "0.0.3",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "croner": "^4.3.9",
+    "csvtojson": "^2.0.10",
+    "dayjs": "^1.11.1",
+    "dotenv": "^16.0.0",
+    "iconv-lite": "^0.6.3",
+    "linebot": "^1.6.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.3.1",
+    "request": "^2.88.2"
+  }
+}
