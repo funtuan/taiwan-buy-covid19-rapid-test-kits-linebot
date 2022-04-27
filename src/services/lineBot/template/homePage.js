@@ -166,7 +166,7 @@ module.exports = ({
 
   return {
     'type': 'flex',
-    'altText': `快篩試劑查詢結果：${address}`,
+    'altText': `快篩販賣數據統計：${address}`,
     'contents': {
       'type': 'bubble',
       'body': {
@@ -198,7 +198,7 @@ module.exports = ({
           },
           {
             'type': 'text',
-            'text': '快篩試劑交易統計',
+            'text': '快篩販賣數據統計',
             'weight': 'bold',
             'size': 'xl',
             'color': '#8DD270FF',
