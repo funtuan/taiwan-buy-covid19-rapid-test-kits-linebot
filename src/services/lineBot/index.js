@@ -10,6 +10,10 @@ const showLocation = require('./showLocation')
 const newHistoryPage = require('./newHistoryPage')
 const nearbyQuantityPage = require('./nearbyQuantityPage')
 
+bot.on('follow', async (event) => {
+  await homePage(event)
+})
+
 bot.on('message', async (event) => {
   // 更改查詢地點
   if (event.message && event.message.type === 'location') {
