@@ -10,6 +10,7 @@ const homePage = require('./homePage')
 const showLocation = require('./showLocation')
 const newHistoryPage = require('./newHistoryPage')
 const nearbyQuantityPage = require('./nearbyQuantityPage')
+const hintLocation = require('./hintLocation')
 
 bot.on('follow', async (event) => {
   await homePage(event)
@@ -37,6 +38,9 @@ bot.on('postback', async (event) => {
   }
   if (data.action === 'nearbyQuantityPage') {
     await nearbyQuantityPage(event, data)
+  }
+  if (data.action === 'hintLocation') {
+    await hintLocation(event, data)
   }
 })
 

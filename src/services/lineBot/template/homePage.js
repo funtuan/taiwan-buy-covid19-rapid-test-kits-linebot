@@ -183,6 +183,14 @@ module.exports = ({
                 'color': '#8E8E8EFF',
                 'flex': 2,
                 'wrap': false,
+                'action': {
+                  'type': 'postback',
+                  'label': '選擇地點',
+                  'text': `@選擇地點`,
+                  'data': JSON.stringify({
+                    'action': 'hintLocation',
+                  }),
+                },
                 'contents': [],
               },
             ],
@@ -468,6 +476,19 @@ module.exports = ({
               'data': JSON.stringify({
                 'action': 'nearbyQuantityPage',
                 'page': 0,
+              }),
+            },
+            'height': 'sm',
+            'style': 'link',
+          },
+          {
+            'type': 'button',
+            'action': {
+              'type': 'postback',
+              'label': '更改所在地點',
+              'text': `@更改所在地點`,
+              'data': JSON.stringify({
+                'action': 'hintLocation',
               }),
             },
             'height': 'sm',

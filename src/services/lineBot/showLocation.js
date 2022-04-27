@@ -17,5 +17,14 @@ module.exports = async (event, {
     address,
     latitude: lat,
     longitude: lng,
+    quickReply: {
+      'items': [{
+        'type': 'action',
+        'action': {
+          'type': 'location',
+          'label': '更改查詢地點',
+        },
+      }],
+    },
   }])
 }
