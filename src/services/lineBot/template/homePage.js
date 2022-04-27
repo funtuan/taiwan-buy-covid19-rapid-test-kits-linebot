@@ -139,7 +139,7 @@ module.exports = ({
     },
     {
       'type': 'text',
-      'text': `庫存剩${item.quantity}支`,
+      'text': `庫存剩${item.quantity}組`,
       'size': 'sm',
       'color': '#4C4C4CFF',
       'flex': 2,
