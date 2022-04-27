@@ -151,16 +151,16 @@ module.exports = ({
 
   let totalSalesVolumeText
   if ((totalSalesVolume / averageTotalSalesVolume) > 1.02) {
-    totalSalesVolumeText = `高於平均 ${Math.floor((totalSalesVolume / averageTotalSalesVolume) * 100)}%`
+    totalSalesVolumeText = `高於平均 ${Math.floor((totalSalesVolume / averageTotalSalesVolume) * 100) - 100}%`
   } else if ((totalSalesVolume / averageTotalSalesVolume) < 0.98) {
-    totalSalesVolumeText = `低於平均 ${Math.floor((totalSalesVolume / averageTotalSalesVolume) * 100)}%`
+    totalSalesVolumeText = `低於平均 ${100 - Math.floor((totalSalesVolume / averageTotalSalesVolume) * 100)}%`
   }
 
   let totalQuantityText
   if ((totalQuantity / averageTotalQuantity) > 1.02) {
-    totalQuantityText = `高於平均 ${Math.floor((totalQuantity / averageTotalQuantity) * 100)}%`
+    totalQuantityText = `高於平均 ${Math.floor((totalQuantity / averageTotalQuantity) * 100) - 100}%`
   } else if ((totalQuantity / averageTotalQuantity) < 0.98) {
-    totalQuantityText = `低於平均 ${Math.floor((totalQuantity / averageTotalQuantity) * 100)}%`
+    totalQuantityText = `低於平均 ${100 - Math.floor((totalQuantity / averageTotalQuantity) * 100)}%`
   }
 
 
