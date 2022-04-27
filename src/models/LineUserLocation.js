@@ -14,6 +14,7 @@ const Model = mongoose.model('LineUserLocation', LineUserLocation)
 Model.findByUserId = async (userId) => {
   const lineUserLocation = await Model.findOne({ userId })
 
+  console.log('[LineUserLocation]', lineUserLocation ? lineUserLocation.toJSON() : 'not save')
   if (!lineUserLocation) {
     return {
       address: '台北市中正區林森南路6號',
