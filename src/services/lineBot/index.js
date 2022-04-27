@@ -1,4 +1,5 @@
 
+const express = require('express')
 const linebot = require('linebot')
 const lineBotConfig = require('../../config/lineBot')
 
@@ -39,4 +40,10 @@ bot.on('postback', async (event) => {
   }
 })
 
-bot.listen('/linewebhook', lineBotConfig.port)
+const app = express()
+const linebotParser = bot.parser()
+app.post('/linewebhook', linebotParser)
+app.get('/', (req, res) => {
+  res.send('ok')
+})
+app.listen(lineBotConfig.port)
