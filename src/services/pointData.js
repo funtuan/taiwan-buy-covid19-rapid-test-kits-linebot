@@ -48,5 +48,16 @@ const refresh = async () => {
   }
 }
 
-Cron('0 * * * * *', refresh)
-refresh()
+Cron('0 * * * * *', () => {
+  refresh().then(() => {
+    console.log('[PointEngine] refresh done')
+  }).catch((err) => {
+    console.log('[PointEngine] refresh', err)
+  })
+})
+
+refresh().then(() => {
+  console.log('[PointEngine] refresh done')
+}).catch((err) => {
+  console.log('[PointEngine] refresh', err)
+})
