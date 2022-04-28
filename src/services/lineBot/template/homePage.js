@@ -210,6 +210,11 @@ module.exports = ({
             'weight': 'bold',
             'size': 'xl',
             'color': '#8DD270FF',
+            'action': {
+              'type': 'message',
+              'label': '取得最新數據',
+              'text': `取得最新數據`,
+            },
             'contents': [],
           },
           {
@@ -372,6 +377,15 @@ module.exports = ({
             'weight': 'bold',
             'size': 'xl',
             'color': '#8DD270FF',
+            'action': {
+              'type': 'postback',
+              'label': '更多購買記錄',
+              'text': `@更多購買記錄`,
+              'data': JSON.stringify({
+                'action': 'newHistoryPage',
+                'page': 0,
+              }),
+            },
             'contents': [],
           },
           {
@@ -420,6 +434,15 @@ module.exports = ({
             'weight': 'bold',
             'size': 'xl',
             'color': '#8DD270FF',
+            'action': {
+              'type': 'postback',
+              'label': '更多附近庫存',
+              'text': `@更多附近庫存`,
+              'data': JSON.stringify({
+                'action': 'nearbyQuantityPage',
+                'page': 0,
+              }),
+            },
             'contents': [],
           },
           {
