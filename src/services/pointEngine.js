@@ -11,6 +11,7 @@ class PointEngine {
 
   async loadData() {
     const data = await Point.find()
+    console.log('[PointEngine] loadData', data.length)
     this.points = data.map((one) => {
       one.history = one.history.filter((one) => dayjs().diff(dayjs(one.updateDate), 'hour') < 24)
       return one.toJSON()
