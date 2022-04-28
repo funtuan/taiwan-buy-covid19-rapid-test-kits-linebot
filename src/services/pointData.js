@@ -21,7 +21,8 @@ const mockData = [
 const refresh = async () => {
   const json = await downloadCSV('https://data.nhi.gov.tw/Datasets/Download.ashx?rid=A21030000I-D03001-001&l=https://data.nhi.gov.tw/resource/Nhi_Fst/Fstdata.csv')
 
-  const data = json.map((item) => ({
+  console.log('[PointData] refresh', json.length)
+  const onlineData = json.map((item) => ({
     code: item['醫事機構代碼'],
     name: item['醫事機構名稱'],
     address: item['醫事機構地址'],
@@ -33,27 +34,65 @@ const refresh = async () => {
     updateDate: new Date(item['來源資料時間']),
     note: item['備註'],
   }))
-  for (const p of data) {
-    await Point.add(p)
+
+  const dbData = await Point.find().lean()
+
+  for (const onlineOne of onlineData) {
+    const dbOne = dbData.find((one) => one.code === onlineOne.code)
+    if (!dbOne) {
+      Point.create({
+        ...onlineOne,
+        history: [{
+          quantity: onlineOne.quantity,
+          updateDate: onlineOne.updateDate,
+        }],
+      }).exec()
+    }
+    if (dbOne && dbOne.quantity !== onlineOne.quantity && dbOne.updateDate.getTime() !== onlineOne.updateDate.getTime()) {
+      Point.updateOne({ code: onlineOne.code }, {
+        $set: {
+          quantity: onlineOne.quantity,
+          updateDate: onlineOne.updateDate,
+          history: [
+            ...dbOne.history,
+            {
+              quantity: onlineOne.quantity,
+              updateDate: onlineOne.updateDate,
+            },
+          ],
+        },
+      }).exec()
+    }
   }
-  const nullPoints = await Point.find({
-    code: { $nin: data.map((p) => p.code) },
-  })
-  for (const p of nullPoints) {
-    await Point.add({
-      code: p.code,
-      quantity: 0,
-      updateDate: new Date(),
-    })
+  for (const dbOne of dbData) {
+    const onlineOne = onlineData.find((one) => one.code === dbOne.code)
+    if (!onlineOne) {
+      Point.updateOne({ code: dbOne.code }, {
+        $set: {
+          quantity: 0,
+          updateDate: new Date(),
+          history: [
+            ...dbOne.history,
+            {
+              quantity: 0,
+              updateDate: new Date(),
+            },
+          ],
+        },
+      }).exec()
+    }
   }
+
+  const used = process.memoryUsage().heapUsed / 1024 / 1024
+  console.log(`[PointData] The script uses approximately ${Math.round(used * 100) / 100} MB`)
 }
 
 module.exports = () => {
   Cron('0 * * * * *', () => {
     refresh().then(() => {
-      console.log('[PointEngine] refresh done')
+      console.log('[PointData] refresh done')
     }).catch((err) => {
-      console.log('[PointEngine] refresh', err)
+      console.log('[PointData] refresh', err)
     })
   })
 }

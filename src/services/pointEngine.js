@@ -1,13 +1,12 @@
 
 const _ = require('lodash')
-const dayjs = require('dayjs')
 const Cron = require('croner')
 const Point = require('../models/Point')
 
 class PointEngine {
   constructor() {
     this.points = []
-    this.maxLatLon = 5 * 1000 / 100000
+    this.maxLatLon = 5 * 1000 / 90000
   }
 
   async loadData() {
@@ -19,7 +18,7 @@ class PointEngine {
       return one
     }))
     const used = process.memoryUsage().heapUsed / 1024 / 1024
-    console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`)
+    console.log(`[PointEngine] The script uses approximately ${Math.round(used * 100) / 100} MB`)
   }
 
   distance(lat1, lon1, lat2, lon2, unit = 'K') {
