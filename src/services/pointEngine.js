@@ -16,6 +16,8 @@ class PointEngine {
       one.history = one.history.filter((one) => dayjs().diff(dayjs(one.updateDate), 'hour') < 24)
       return one.toJSON()
     })
+    const used = process.memoryUsage().heapUsed / 1024 / 1024
+    console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`)
   }
 
   distance(lat1, lon1, lat2, lon2, unit = 'K') {
@@ -134,13 +136,16 @@ class PointEngine {
     console.log(`[PointEngine] findByLocation ${new Date() - startAt} ms`)
     return data
   }
+
+  init() {
+    this.loadData()
+
+    Cron('30 * * * * *', () => {
+      this.loadData()
+    })
+  }
 }
 
 const pointEngine = new PointEngine()
-pointEngine.loadData()
-
-Cron('30 * * * * *', () => {
-  pointEngine.loadData()
-})
 
 module.exports = pointEngine

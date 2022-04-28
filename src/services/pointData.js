@@ -48,10 +48,12 @@ const refresh = async () => {
   }
 }
 
-Cron('0 * * * * *', () => {
-  refresh().then(() => {
-    console.log('[PointEngine] refresh done')
-  }).catch((err) => {
-    console.log('[PointEngine] refresh', err)
+module.exports = () => {
+  Cron('0 * * * * *', () => {
+    refresh().then(() => {
+      console.log('[PointEngine] refresh done')
+    }).catch((err) => {
+      console.log('[PointEngine] refresh', err)
+    })
   })
-})
+}

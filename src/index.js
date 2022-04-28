@@ -1,5 +1,5 @@
 
-require('./db')
-require('./services/lineBot')
-require('./services/pointData')
-require('./services/pointEngine')
+require('./db')()
+require('./services/lineBot')()
+require('./services/pointData')()
+require('./services/pointEngine').init()

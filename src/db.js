@@ -4,4 +4,7 @@ const {
   mongoUrl,
 } = require('./config/db')
 
-mongoose.connect(mongoUrl, { useNewUrlParser: true })
+
+module.exports = () => {
+  mongoose.connect(mongoUrl, { useNewUrlParser: true })
+}

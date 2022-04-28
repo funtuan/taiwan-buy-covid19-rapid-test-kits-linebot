@@ -45,40 +45,42 @@ async function postbackHandleEvent(event) {
   }
 }
 
-const app = express()
+module.exports = () => {
+  const app = express()
 
-app.post('/linewebhook', line.middleware(lineBotConfig), (req, res) => {
-  Promise
-      .all(req.body.events.map(handleEvent))
-      .then((result) => res.json(result))
-      .catch((err) => {
-        console.error(err)
-        res.status(500).end()
-      })
-})
+  app.post('/linewebhook', line.middleware(lineBotConfig), (req, res) => {
+    Promise
+        .all(req.body.events.map(handleEvent))
+        .then((result) => res.json(result))
+        .catch((err) => {
+          console.error(err)
+          res.status(500).end()
+        })
+  })
 
-// event handler
-function handleEvent(event) {
-  event.reply = (message) => {
-    return client.replyMessage(event.replyToken, message)
+  // event handler
+  function handleEvent(event) {
+    event.reply = (message) => {
+      return client.replyMessage(event.replyToken, message)
+    }
+
+    if (event.type === 'follow') {
+      followHandleEvent(event)
+    }
+    if (event.type === 'message') {
+      messageHandleEvent(event)
+    }
+    if (event.type === 'postback') {
+      postbackHandleEvent(event)
+    }
+
+    return Promise.resolve('ok')
   }
 
-  if (event.type === 'follow') {
-    followHandleEvent(event)
-  }
-  if (event.type === 'message') {
-    messageHandleEvent(event)
-  }
-  if (event.type === 'postback') {
-    postbackHandleEvent(event)
-  }
-
-  return Promise.resolve('ok')
+  app.get('/', (req, res) => {
+    res.send('ok')
+  })
+  app.listen(lineBotConfig.port, () => {
+    console.log(`listening on ${lineBotConfig.port}`)
+  })
 }
-
-app.get('/', (req, res) => {
-  res.send('ok')
-})
-app.listen(lineBotConfig.port, () => {
-  console.log(`listening on ${lineBotConfig.port}`)
-})
