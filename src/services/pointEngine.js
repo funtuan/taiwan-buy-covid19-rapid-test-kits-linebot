@@ -135,6 +135,8 @@ class PointEngine {
 const pointEngine = new PointEngine()
 pointEngine.loadData()
 
-Cron('30 * * * * *', pointEngine.loadData)
+Cron('30 * * * * *', () => {
+  pointEngine.loadData()
+})
 
 module.exports = pointEngine
