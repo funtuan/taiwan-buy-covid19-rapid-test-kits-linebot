@@ -185,8 +185,8 @@ module.exports = ({
                 'wrap': false,
                 'action': {
                   'type': 'postback',
-                  'label': '選擇地點',
-                  'text': `@選擇地點`,
+                  'label': '更改查詢地點',
+                  'text': `@更改查詢地點`,
                   'data': JSON.stringify({
                     'action': 'hintLocation',
                   }),
@@ -508,8 +508,8 @@ module.exports = ({
             'type': 'button',
             'action': {
               'type': 'postback',
-              'label': '更改所在地點',
-              'text': `@更改所在地點`,
+              'label': '更改查詢地點',
+              'text': `@更改查詢地點`,
               'data': JSON.stringify({
                 'action': 'hintLocation',
               }),
