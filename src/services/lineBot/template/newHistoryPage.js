@@ -1,6 +1,30 @@
 
 const dayjs = require('dayjs')
 
+const quantityTemplate = (item) => {
+  let diffText
+  let diffTextColor
+  let diffQuantityText
+  if (item.history.length >= 2) {
+    const lastHistory = item.history[item.history.length - 1]
+    const secondLastHistory = item.history[item.history.length - 2]
+    const diffQuantity = secondLastHistory.quantity - lastHistory.quantity
+    const diffMinute = dayjs().diff(dayjs(lastHistory.updateDate), 'minute')
+    diffTextColor = diffMinute < 60 ? '#E74F4FFF' : '#999999'
+    diffText = diffMinute >= 60 ? `${Math.floor(diffMinute / 60)} 小時前` : `${diffMinute} 分鐘前`
+    diffQuantityText = diffQuantity > 0 ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : `${diffText} 補充${-diffQuantity}份（剩${item.quantity}份）`
+  }
+
+  return [{
+    'type': 'text',
+    'text': diffQuantityText || `庫存 ${item.quantity} 份`,
+    'size': 'sm',
+    'color': diffTextColor || '#4C4C4CFF',
+    'flex': 3,
+    'contents': [],
+  }]
+}
+
 module.exports = ({
   address,
   newHistory,
@@ -20,11 +44,6 @@ module.exports = ({
         ],
       })
     }
-    const lastHistory = item.history[item.history.length - 1]
-    const secondLastHistory = item.history[item.history.length - 2]
-    const diffQuantity = secondLastHistory.quantity - lastHistory.quantity
-    const diffMinute = dayjs().diff(dayjs(lastHistory.updateDate), 'minute')
-    const diffText = diffMinute >= 60 ? `${Math.floor(diffMinute / 60)} 小時前` : `${diffMinute} 分鐘前`
     acc.push(...[{
       'type': 'box',
       'layout': 'horizontal',
@@ -68,21 +87,15 @@ module.exports = ({
       'flex': 2,
       'contents': [],
     },
-    {
-      'type': 'text',
-      'text': diffQuantity > 0 ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : `${diffText} 補充${-diffQuantity}份（剩${item.quantity}份）`,
-      'size': 'sm',
-      'color': diffMinute < 60 ? '#E74F4FFF' : '#999999',
-      'flex': 3,
-      'contents': [],
-    }])
+    ...quantityTemplate(item),
+    ])
 
     return acc
   }, [])
 
   return {
     'type': 'flex',
-    'altText': `即時購買記錄查詢結果：${address}`,
+    'altText': `即時出售記錄查詢結果：${address}`,
     'contents': {
       'type': 'bubble',
       'body': {
@@ -114,7 +127,7 @@ module.exports = ({
           },
           {
             'type': 'text',
-            'text': `即時購買記錄 ${start}~${end}`,
+            'text': `即時出售記錄 ${start}~${end}`,
             'weight': 'bold',
             'size': 'xl',
             'color': '#8DD270FF',
@@ -155,8 +168,8 @@ module.exports = ({
             'type': 'button',
             'action': {
               'type': 'postback',
-              'label': '下一頁購買記錄',
-              'text': `@下一頁購買記錄`,
+              'label': '下一頁出售記錄',
+              'text': `@下一頁出售記錄`,
               'data': JSON.stringify({
                 'action': 'newHistoryPage',
                 'page': nextPage,

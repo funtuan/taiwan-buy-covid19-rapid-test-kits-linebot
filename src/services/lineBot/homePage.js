@@ -3,7 +3,7 @@ const pointEngine = require('../pointEngine')
 const LineUserLocation = require('../../models/LineUserLocation')
 const homePageTemplate = require('./template/homePage')
 
-const averageCount = 100
+const averageCount = 500
 let averageTotalSalesVolume
 let averageTotalQuantity
 

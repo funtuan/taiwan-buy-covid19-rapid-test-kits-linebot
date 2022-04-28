@@ -1,4 +1,29 @@
 
+const dayjs = require('dayjs')
+
+const quantityTemplate = (item) => {
+  let diffText
+  let diffTextColor
+  let diffQuantityText
+  if (item.history.length >= 2) {
+    const lastHistory = item.history[item.history.length - 1]
+    const secondLastHistory = item.history[item.history.length - 2]
+    const diffQuantity = secondLastHistory.quantity - lastHistory.quantity
+    const diffMinute = dayjs().diff(dayjs(lastHistory.updateDate), 'minute')
+    diffTextColor = diffMinute < 60 ? '#E74F4FFF' : '#999999'
+    diffText = diffMinute >= 60 ? `${Math.floor(diffMinute / 60)} 小時前` : `${diffMinute} 分鐘前`
+    diffQuantityText = diffQuantity > 0 ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : `${diffText} 補充${-diffQuantity}份（剩${item.quantity}份）`
+  }
+
+  return [{
+    'type': 'text',
+    'text': diffQuantityText || `庫存 ${item.quantity} 份`,
+    'size': 'sm',
+    'color': diffTextColor || '#4C4C4CFF',
+    'flex': 3,
+    'contents': [],
+  }]
+}
 
 module.exports = ({
   address,
@@ -62,14 +87,8 @@ module.exports = ({
       'flex': 2,
       'contents': [],
     },
-    {
-      'type': 'text',
-      'text': `庫存剩${item.quantity}份`,
-      'size': 'sm',
-      'color': '#4C4C4CFF',
-      'flex': 2,
-      'contents': [],
-    }])
+    ...quantityTemplate(item),
+    ])
 
     return acc
   }, [])
