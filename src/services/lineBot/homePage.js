@@ -51,6 +51,6 @@ module.exports = async (event) => {
       nearbyQuantity,
     }))
   } catch (error) {
-    console.log('[homePage] error', error)
+    console.log('[homePage] error', error.message)
   }
 }
