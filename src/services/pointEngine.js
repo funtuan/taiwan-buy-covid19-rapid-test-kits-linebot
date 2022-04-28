@@ -140,7 +140,7 @@ class PointEngine {
   init() {
     this.loadData()
 
-    Cron('* * * * * *', () => {
+    Cron('30 * * * * *', () => {
       this.loadData()
     })
   }
