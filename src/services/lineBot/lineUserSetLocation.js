@@ -9,16 +9,18 @@ module.exports = async (event) => {
 
   const lineUserLocation = await LineUserLocation.findOne({ userId: event.source.userId })
 
+  const address = event.message.address ? event.message.address.replace(new RegExp('[0-9]*台灣'), '') : '選擇的地址'
+
   if (!lineUserLocation) {
     await LineUserLocation.create({
       userId: event.source.userId,
-      address: event.message.address.replace(new RegExp('[0-9]*台灣'), ''),
+      address,
       lat: event.message.latitude,
       lng: event.message.longitude,
     })
   } else {
     lineUserLocation.set({
-      address: event.message.address.replace(new RegExp('[0-9]*台灣'), ''),
+      address,
       lat: event.message.latitude,
       lng: event.message.longitude,
     })
