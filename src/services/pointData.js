@@ -66,7 +66,7 @@ const refresh = async () => {
   }
   for (const dbOne of dbData) {
     const onlineOne = onlineData.find((one) => one.code === dbOne.code)
-    if (!onlineOne) {
+    if (!onlineOne && dbOne.quantity > 0) {
       Point.updateOne({ code: dbOne.code }, {
         $set: {
           quantity: 0,
