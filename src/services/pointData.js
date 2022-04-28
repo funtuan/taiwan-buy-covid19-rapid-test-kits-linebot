@@ -55,9 +55,3 @@ Cron('0 * * * * *', () => {
     console.log('[PointEngine] refresh', err)
   })
 })
-
-refresh().then(() => {
-  console.log('[PointEngine] refresh done')
-}).catch((err) => {
-  console.log('[PointEngine] refresh', err)
-})

@@ -72,7 +72,7 @@ module.exports = ({
     },
     {
       'type': 'text',
-      'text': diffQuantity > 0 ? `${diffText} 售出${diffQuantity}支（剩${item.quantity}支）` : `${diffText} 補充${-diffQuantity}支（剩${item.quantity}支）`,
+      'text': diffQuantity > 0 ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : `${diffText} 補充${-diffQuantity}份（剩${item.quantity}份）`,
       'size': 'sm',
       'color': diffMinute < 60 ? '#E74F4FFF' : '#999999',
       'flex': 3,
@@ -139,7 +139,7 @@ module.exports = ({
     },
     {
       'type': 'text',
-      'text': `庫存剩${item.quantity}組`,
+      'text': `庫存剩${item.quantity}份`,
       'size': 'sm',
       'color': '#4C4C4CFF',
       'flex': 2,
@@ -247,7 +247,7 @@ module.exports = ({
                   },
                   {
                     'type': 'text',
-                    'text': `${totalSalesVolume} 組`,
+                    'text': `${totalSalesVolume} 份`,
                     'size': 'sm',
                     'color': '#4C4C4CFF',
                     'flex': 5,
@@ -295,7 +295,7 @@ module.exports = ({
                   },
                   {
                     'type': 'text',
-                    'text': `${totalQuantity} 組`,
+                    'text': `${totalQuantity} 份`,
                     'size': 'sm',
                     'color': '#4C4C4CFF',
                     'flex': 5,

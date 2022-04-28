@@ -70,7 +70,7 @@ module.exports = ({
     },
     {
       'type': 'text',
-      'text': diffQuantity > 0 ? `${diffText} 售出${diffQuantity}支（剩${item.quantity}支）` : `${diffText} 補充${-diffQuantity}支（剩${item.quantity}支）`,
+      'text': diffQuantity > 0 ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : `${diffText} 補充${-diffQuantity}份（剩${item.quantity}份）`,
       'size': 'sm',
       'color': diffMinute < 60 ? '#E74F4FFF' : '#999999',
       'flex': 3,
