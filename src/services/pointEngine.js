@@ -104,6 +104,7 @@ class PointEngine {
     nearbyQuantityStart = 0,
     nearbyQuantityLimit = 3,
   } = {}) {
+    const startAt = new Date()
     const points = this.points
         .map((one) => ({
           ...one,
@@ -117,7 +118,7 @@ class PointEngine {
         })
         .slice(0, limit)
 
-    return {
+    const data = {
       points,
       statistical: statistical ? this.statistical(points) : null,
       newHistory: newHistory ? this.newHistory(points, {
@@ -129,6 +130,9 @@ class PointEngine {
         limit: nearbyQuantityLimit,
       }) : null,
     }
+
+    console.log(`[PointEngine] findByLocation ${new Date() - startAt} ms`)
+    return data
   }
 }
 
