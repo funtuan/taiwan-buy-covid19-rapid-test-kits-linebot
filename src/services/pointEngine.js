@@ -7,6 +7,7 @@ const Point = require('../models/Point')
 class PointEngine {
   constructor() {
     this.points = []
+    this.maxLatLon = 5 * 1000 / 100000
   }
 
   async loadData() {
@@ -109,6 +110,12 @@ class PointEngine {
   } = {}) {
     const startAt = new Date()
     const points = this.points
+        .filter((item) =>
+          (item.lat < (lat + this.maxLatLon)) &&
+          (item.lat > (lat - this.maxLatLon)) &&
+          (item.lng < (lng + this.maxLatLon)) &&
+          (item.lng > (lng - this.maxLatLon)),
+        )
         .map((one) => ({
           ...one,
           distance: this.distance(lat, lng, one.lat, one.lng),
