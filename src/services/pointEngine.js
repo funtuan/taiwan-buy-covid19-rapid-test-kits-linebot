@@ -12,10 +12,10 @@ class PointEngine {
   async loadData() {
     const data = await Point.find()
     console.log('[PointEngine] loadData', data.length)
-    this.points = data.map((one) => {
+    this.points.splice(0, this.points.length, ...data.map((one) => {
       one.history = one.history.filter((one) => dayjs().diff(dayjs(one.updateDate), 'hour') < 24)
       return one.toJSON()
-    })
+    }))
     const used = process.memoryUsage().heapUsed / 1024 / 1024
     console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`)
   }
@@ -140,7 +140,7 @@ class PointEngine {
   init() {
     this.loadData()
 
-    Cron('30 * * * * *', () => {
+    Cron('* * * * * *', () => {
       this.loadData()
     })
   }
