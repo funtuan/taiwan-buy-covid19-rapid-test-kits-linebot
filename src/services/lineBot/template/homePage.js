@@ -530,7 +530,7 @@ module.exports = ({
             'type': 'button',
             'action': {
               'type': 'uri',
-              'label': '地圖查詢（江明宗製）',
+              'label': '地圖查詢 by kiang',
               'uri': `https://kiang.github.io/antigen/#pos/${lng}/${lat}`,
             },
             'height': 'sm',
