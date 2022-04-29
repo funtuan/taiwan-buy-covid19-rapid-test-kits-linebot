@@ -12,9 +12,10 @@ const LineUserLocation = new Schema({
 const Model = mongoose.model('LineUserLocation', LineUserLocation)
 
 Model.findByUserId = async (userId) => {
+  const startAt = new Date()
   const lineUserLocation = await Model.findOne({ userId })
 
-  console.log('[LineUserLocation]', lineUserLocation ? lineUserLocation.address : 'not save')
+  console.log('[LineUserLocation]', lineUserLocation ? lineUserLocation.address : 'not save', ` - ${new Date() - startAt}ms`)
   if (!lineUserLocation) {
     return {
       address: '台北市中正區林森南路6號',
