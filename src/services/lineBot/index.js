@@ -9,6 +9,7 @@ const client = new line.Client(lineBotConfig)
 const lineUserSetLocation = require('./lineUserSetLocation')
 const homePage = require('./homePage')
 const showLocation = require('./showLocation')
+const showLocationByCode = require('./showLocationByCode')
 const newHistoryPage = require('./newHistoryPage')
 const nearbyQuantityPage = require('./nearbyQuantityPage')
 const hintLocation = require('./hintLocation')
@@ -33,6 +34,9 @@ async function postbackHandleEvent(event) {
   const data = JSON.parse(event.postback.data)
   if (data.action === 'showLocation') {
     await showLocation(event, data)
+  }
+  if (data.action === 'showLocationByCode') {
+    await showLocationByCode(event, data)
   }
   if (data.action === 'newHistoryPage') {
     await newHistoryPage(event, data)

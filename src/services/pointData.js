@@ -64,6 +64,13 @@ const refresh = async () => {
         },
       })
     }
+    if (dbOne && dbOne.note !== onlineOne.note) {
+      bulk.find({ code: onlineOne.code }).updateOne({
+        $set: {
+          note: onlineOne.note,
+        },
+      })
+    }
   }
   for (const dbOne of dbData) {
     const onlineOne = onlineData.find((one) => one.code === dbOne.code)

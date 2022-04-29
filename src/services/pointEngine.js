@@ -144,6 +144,24 @@ class PointEngine {
     return data
   }
 
+  findOneInfo(code) {
+    const point = this.findOneByCode(code)
+    if (!point) {
+      return null
+    }
+    return {
+      code: point.code,
+      name: point.name,
+      lat: point.lat,
+      lng: point.lng,
+      note: point.note,
+      phone: point.phone,
+      quantity: point.quantity,
+      updateDate: point.updateDate,
+      history: point.history.slice(-2),
+    }
+  }
+
   init() {
     this.loadData()
 

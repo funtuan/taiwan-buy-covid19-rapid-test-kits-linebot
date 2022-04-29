@@ -68,11 +68,8 @@ module.exports = ({
             'label': '查看地點',
             'text': `@查看地點 ${item.name}`,
             'data': JSON.stringify({
-              'action': 'showLocation',
-              'name': item.name,
-              'address': item.address,
-              'lat': item.lat,
-              'lng': item.lng,
+              'action': 'showLocationByCode',
+              'code': item.code,
             }),
           },
           'contents': [],
