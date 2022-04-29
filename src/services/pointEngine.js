@@ -10,7 +10,7 @@ class PointEngine {
   }
 
   async loadData() {
-    const data = await Point.find().lean()
+    const data = await Point.findAllData()
     console.log('[PointEngine] loadData', data.length)
     const dayString = new Date().toDateString()
     this.points.splice(0, this.points.length, ...data.map((one) => {

@@ -22,4 +22,15 @@ const Point = new Schema({
 
 const Model = mongoose.model('Point', Point)
 
+Model.findAllData = async () => {
+  const data = []
+  const count = await Model.count()
+  const limit = 50
+  for (let start = 0; start < count; start += limit) {
+    const result = await Model.find().skip(start).limit(limit).lean()
+    data.push(...result)
+  }
+  return data
+}
+
 module.exports = Model

@@ -35,7 +35,7 @@ const refresh = async () => {
     note: item['備註'],
   }))
 
-  const dbData = await Point.find().lean()
+  const dbData = await Point.findAllData()
 
   const bulk = Point.collection.initializeUnorderedBulkOp()
   for (const onlineOne of onlineData) {
