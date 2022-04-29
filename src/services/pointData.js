@@ -37,19 +37,20 @@ const refresh = async () => {
 
   const dbData = await Point.find().lean()
 
+  const bulk = Point.collection.initializeUnorderedBulkOp()
   for (const onlineOne of onlineData) {
     const dbOne = dbData.find((one) => one.code === onlineOne.code)
     if (!dbOne) {
-      Point.create({
+      bulk.insert({
         ...onlineOne,
         history: [{
           quantity: onlineOne.quantity,
           updateDate: onlineOne.updateDate,
         }],
-      }).exec()
+      })
     }
     if (dbOne && dbOne.quantity !== onlineOne.quantity && dbOne.updateDate.getTime() !== onlineOne.updateDate.getTime()) {
-      Point.updateOne({ code: onlineOne.code }, {
+      bulk.find({ code: onlineOne.code }).updateOne({
         $set: {
           quantity: onlineOne.quantity,
           updateDate: onlineOne.updateDate,
@@ -61,13 +62,13 @@ const refresh = async () => {
             },
           ],
         },
-      }).exec()
+      })
     }
   }
   for (const dbOne of dbData) {
     const onlineOne = onlineData.find((one) => one.code === dbOne.code)
     if (!onlineOne && dbOne.quantity > 0) {
-      Point.updateOne({ code: dbOne.code }, {
+      bulk.find({ code: dbOne.code }).updateOne({
         $set: {
           quantity: 0,
           updateDate: new Date(),
@@ -79,9 +80,11 @@ const refresh = async () => {
             },
           ],
         },
-      }).exec()
+      })
     }
   }
+
+  await bulk.execute()
 
   const used = process.memoryUsage().heapUsed / 1024 / 1024
   console.log(`[PointData] The script uses approximately ${Math.round(used * 100) / 100} MB`)
