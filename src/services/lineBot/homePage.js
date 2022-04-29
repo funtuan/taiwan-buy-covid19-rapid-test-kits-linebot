@@ -43,6 +43,8 @@ module.exports = async (event) => {
   try {
     await event.reply(homePageTemplate({
       address: lineUserLocation.address,
+      lng: lineUserLocation.lng,
+      lat: lineUserLocation.lat,
       totalSalesVolume: statistical.totalSalesVolume,
       totalQuantity: statistical.totalQuantity,
       averageTotalSalesVolume: statistical.averageTotalSalesVolume,

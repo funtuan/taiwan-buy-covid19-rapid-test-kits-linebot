@@ -26,6 +26,8 @@ const quantityTemplate = (item) => {
 }
 
 module.exports = ({
+  lng,
+  lat,
   address,
   totalSalesVolume,
   totalQuantity,
@@ -520,6 +522,16 @@ module.exports = ({
               'data': JSON.stringify({
                 'action': 'hintLocation',
               }),
+            },
+            'height': 'sm',
+            'style': 'link',
+          },
+          {
+            'type': 'button',
+            'action': {
+              'type': 'uri',
+              'label': '地圖查詢（江明宗製）',
+              'uri': `https://kiang.github.io/antigen/#pos/${lng}/${lat}`,
             },
             'height': 'sm',
             'style': 'link',
