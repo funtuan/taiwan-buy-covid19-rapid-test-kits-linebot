@@ -12,7 +12,7 @@ const quantityTemplate = (item) => {
     const diffMinute = dayjs().diff(dayjs(lastHistory.updateDate), 'minute')
     diffTextColor = diffMinute < 60 ? '#E74F4FFF' : '#999999'
     diffText = diffMinute >= 60 ? `${Math.floor(diffMinute / 60)} 小時前` : `${diffMinute} 分鐘前`
-    diffQuantityText = diffQuantity > 0 ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : `${diffText} 補充${-diffQuantity}份（剩${item.quantity}份）`
+    diffQuantityText = diffQuantity > 0 ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : null
   }
 
   return [{
