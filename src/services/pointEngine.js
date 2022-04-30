@@ -64,7 +64,9 @@ class PointEngine {
     limit = 3,
   }) {
     const allHistory = points
-        .filter((one) => one.history.length >= 2 && ((one.history[one.history.length - 2].quantity - one.history[one.history.length - 1].quantity) < 30))
+        .filter((one) => one.history.length >= 2 &&
+        ((one.history[one.history.length - 2].quantity - one.history[one.history.length - 1].quantity) < 30) &&
+        ((one.history[one.history.length - 2].quantity - one.history[one.history.length - 1].quantity) > 0))
         .reduce((acc, one) => {
           return acc.concat(one.history.map((o) => ({
             code: one.code,
