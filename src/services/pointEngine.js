@@ -44,7 +44,7 @@ class PointEngine {
     const totalSalesVolume = points.reduce((acc, one) => {
       const history = one.history
       for (let i = 1; i < history.length; i++) {
-        if (history[i].quantity < history[i - 1].quantity) {
+        if (history[i].quantity < history[i - 1].quantity && ((history[i - 1].quantity - history[i].quantity) < 30)) {
           acc += history[i - 1].quantity - history[i].quantity
         }
       }
