@@ -35,8 +35,29 @@ module.exports = async (event, {
   }
 
   await event.reply([{
-    type: 'text',
-    text: `${point.name}\n${point.phone}\n${quantityText(point)}${point.note.indexOf('快篩') !== -1 ? `\n※ ${point.note}` : ''}`,
+    'type': 'template',
+    'altText': 'This is a buttons template',
+    'template': {
+      'type': 'buttons',
+      'title': point.name,
+      'text': `${quantityText(point)}${point.note.indexOf('快篩') !== -1 ? `\n※ ${point.note}` : ''}`,
+      'actions': [
+        {
+          'type': 'uri',
+          'label': '打電話店家',
+          'uri': `tel:${point.phone}`,
+        },
+        {
+          'type': 'postback',
+          'label': '刷新庫存',
+          'text': `@查看地點 ${point.name}`,
+          'data': JSON.stringify({
+            'action': 'showLocationByCode',
+            'code': point.code,
+          }),
+        },
+      ],
+    },
   }, {
     type: 'location',
     title: point.name,
