@@ -36,15 +36,11 @@ module.exports = ({
         return a.distance - b.distance
       })
 
-  const one = rangePoints.length > 0 ? rangePoints[0] : null
-
-  if (!one) {
-    return null
-  }
-
-  return {
-    ...one,
-    newHistoryAt: dayjs(one.newHistoryAt).format('YYYY-MM-DD HH:mm:ss'),
-    updateDate: dayjs(one.updateDate).format('YYYY-MM-DD HH:mm:ss'),
-  }
+  return rangePoints
+      .slice(0, 5)
+      .map((one) => ({
+        ...one,
+        newHistoryAt: dayjs(one.newHistoryAt).format('YYYY-MM-DD HH:mm:ss'),
+        updateDate: dayjs(one.updateDate).format('YYYY-MM-DD HH:mm:ss'),
+      }))
 }

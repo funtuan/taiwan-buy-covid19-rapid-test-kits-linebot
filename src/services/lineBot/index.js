@@ -87,9 +87,9 @@ module.exports = () => {
   app.get('/api/recommend', (req, res) => {
     const schema = Joi.object({
       lat: Joi.number()
-          .min(24).max(26).required(),
+          .min(22).max(28).required(),
       lng: Joi.number()
-          .min(120).max(123).required(),
+          .min(110).max(130).required(),
       minQuantity: Joi.number().min(0).max(200).required(),
       maxNewHistoryTime: Joi.number().min(0).max(60 * 24).required(),
     })
@@ -100,8 +100,13 @@ module.exports = () => {
       return
     }
 
-    const json = apiRecommend(value)
-    res.send(Object.keys(json).join(',') + '\n' + Object.values(json).join(','))
+    const points = apiRecommend(value)
+    if (points.length === 0) {
+      res.status(404).send('附近沒有符合條件的地點')
+      return
+    }
+
+    res.send(Object.keys(points[0]).join(',') + '\n' + points.map((one) => Object.values(one).join(',')).join('\n'))
   })
   app.listen(lineBotConfig.port, () => {
     console.log(`listening on ${lineBotConfig.port}`)
