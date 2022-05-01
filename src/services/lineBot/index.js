@@ -1,4 +1,5 @@
 
+const Joi = require('joi')
 
 const line = require('@line/bot-sdk')
 const express = require('express')
@@ -13,6 +14,7 @@ const showLocationByCode = require('./showLocationByCode')
 const newHistoryPage = require('./newHistoryPage')
 const nearbyQuantityPage = require('./nearbyQuantityPage')
 const hintLocation = require('./hintLocation')
+const apiRecommend = require('./apiRecommend')
 
 async function followHandleEvent(event) {
   await homePage(event)
@@ -80,6 +82,26 @@ module.exports = () => {
 
   app.get('/', (req, res) => {
     res.send('ok')
+  })
+
+  app.get('/api/recommend', (req, res) => {
+    const schema = Joi.object({
+      lat: Joi.number()
+          .min(24).max(26).required(),
+      lng: Joi.number()
+          .min(120).max(123).required(),
+      minQuantity: Joi.number().min(0).max(200).required(),
+      maxNewHistoryTime: Joi.number().min(0).max(60 * 24).required(),
+    })
+
+    const { error, value } = schema.validate(req.query)
+    if (error) {
+      res.status(400).send(error.message)
+      return
+    }
+
+    const json = apiRecommend(value)
+    res.send(Object.keys(json).join(',') + '\n' + Object.values(json).join(','))
   })
   app.listen(lineBotConfig.port, () => {
     console.log(`listening on ${lineBotConfig.port}`)
