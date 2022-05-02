@@ -39,8 +39,7 @@ module.exports = async (event, {
     'altText': 'This is a buttons template',
     'template': {
       'type': 'buttons',
-      'title': point.name,
-      'text': `${quantityText(point)}${point.note.length > 1 ? `\n※ ${point.note}` : ''}`,
+      'text': `${point.name}\n${quantityText(point)}${point.note.length > 1 ? `\n※ ${point.note}` : ''}`.slice(0, 159),
       'actions': [
         {
           'type': 'uri',
