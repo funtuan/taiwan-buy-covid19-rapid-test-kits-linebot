@@ -40,7 +40,7 @@ module.exports = async (event, {
     'template': {
       'type': 'buttons',
       'title': point.name,
-      'text': `${quantityText(point)}${point.note.indexOf('快篩') !== -1 ? `\n※ ${point.note}` : ''}`,
+      'text': `${quantityText(point)}${point.note.length > 1 ? `\n※ ${point.note}` : ''}`,
       'actions': [
         {
           'type': 'uri',
