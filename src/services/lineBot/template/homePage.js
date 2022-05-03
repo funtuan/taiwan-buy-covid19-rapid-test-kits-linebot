@@ -182,6 +182,20 @@ module.exports = ({
             'contents': [
               {
                 'type': 'text',
+                'text': dayjs().format('YYYY/MM/DD HH:mm'),
+                'color': '#8E8E8EFF',
+                'flex': 2,
+                'wrap': false,
+                'contents': [],
+              },
+            ],
+          },
+          {
+            'type': 'box',
+            'layout': 'horizontal',
+            'contents': [
+              {
+                'type': 'text',
                 'text': address,
                 'color': '#8E8E8EFF',
                 'flex': 2,
