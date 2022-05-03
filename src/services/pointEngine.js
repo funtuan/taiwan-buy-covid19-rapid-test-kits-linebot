@@ -14,7 +14,7 @@ class PointEngine {
     console.log('[PointEngine] loadData', data.length)
     const dayString = new Date().toDateString()
     this.points.splice(0, this.points.length, ...data.map((one) => {
-      one.history = one.history.filter((one) => dayString === one.updateDate.toDateString())
+      one.history = one.history.filter((one) => dayString === new Date(one.updateDate - 4 * 60 * 60 * 1000).toDateString())
       return one
     }))
     const used = process.memoryUsage().heapUsed / 1024 / 1024
