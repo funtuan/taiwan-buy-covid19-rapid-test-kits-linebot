@@ -14,6 +14,7 @@ const showLocationByCode = require('./showLocationByCode')
 const newHistoryPage = require('./newHistoryPage')
 const nearbyQuantityPage = require('./nearbyQuantityPage')
 const hintLocation = require('./hintLocation')
+const moreMenu = require('./moreMenu')
 const apiRecommend = require('./apiRecommend')
 
 async function followHandleEvent(event) {
@@ -48,6 +49,9 @@ async function postbackHandleEvent(event) {
   }
   if (data.action === 'hintLocation') {
     await hintLocation(event, data)
+  }
+  if (data.action === 'moreMenu') {
+    await moreMenu(event, data)
   }
 }
 

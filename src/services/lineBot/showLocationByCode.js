@@ -36,7 +36,7 @@ module.exports = async (event, {
 
   await event.reply([{
     'type': 'template',
-    'altText': 'This is a buttons template',
+    'altText': point.name,
     'template': {
       'type': 'buttons',
       'text': `${point.name}\n${quantityText(point)}${point.note.length > 1 ? `\n※ ${point.note}` : ''}`.slice(0, 159),

@@ -523,9 +523,12 @@ module.exports = ({
           {
             'type': 'button',
             'action': {
-              'type': 'uri',
-              'label': '地圖查詢 by kiang',
-              'uri': `https://kiang.github.io/antigen/#pos/${lng}/${lat}`,
+              'type': 'postback',
+              'label': '其他功能／問題回報',
+              'text': `@其他功能／問題回報`,
+              'data': JSON.stringify({
+                'action': 'moreMenu',
+              }),
             },
             'height': 'sm',
             'style': 'link',
