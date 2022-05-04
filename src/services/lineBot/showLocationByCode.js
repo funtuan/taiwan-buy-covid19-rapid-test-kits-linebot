@@ -14,7 +14,7 @@ const quantityText = (item) => {
     diffQuantityText = (diffQuantity > 0 && diffQuantity < 30) ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : null
   }
 
-  return diffQuantityText || `庫存 ${item.quantity} 份（今日尚未開賣）`
+  return diffQuantityText || `庫存 ${item.quantity} 份（尚未開賣）`
 }
 
 module.exports = async (event, {

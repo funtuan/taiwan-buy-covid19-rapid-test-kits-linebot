@@ -17,7 +17,7 @@ const quantityTemplate = (item) => {
 
   return [{
     'type': 'text',
-    'text': diffQuantityText || `庫存 ${item.quantity} 份（今日尚未開賣）`,
+    'text': diffQuantityText || `庫存 ${item.quantity} 份（尚未開賣）`,
     'size': 'sm',
     'color': diffQuantityText ? diffTextColor : '#999999',
     'flex': 3,
