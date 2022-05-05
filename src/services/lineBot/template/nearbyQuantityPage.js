@@ -16,18 +16,18 @@ const quantityTemplate = (item) => {
     diffQuantityText = (diffQuantity > 0 && diffQuantity < 30) ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : null
   }
 
-  let predictText = ''
+  let predictText = '尚未開賣'
   if (!diffQuantityText) {
     const p = pointHistoryOpenEngine.findOneByCode(item.code)
     const nowTime = new Date().getHours() * 60 + new Date().getMinutes()
     if (p && p.predictTime && p.predictTime > nowTime) {
-      predictText = `，預測 ${p.predictText} 開賣`
+      predictText = `預測 ${p.predictText} 開賣`
     }
   }
 
   return [{
     'type': 'text',
-    'text': diffQuantityText || `庫存 ${item.quantity} 份（尚未開賣${predictText}）`,
+    'text': diffQuantityText || `庫存 ${item.quantity} 份（${predictText}）`,
     'size': 'sm',
     'color': diffQuantityText ? diffTextColor : '#999999',
     'flex': 3,

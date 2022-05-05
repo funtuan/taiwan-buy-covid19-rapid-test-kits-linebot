@@ -1,6 +1,7 @@
 
 const dayjs = require('dayjs')
 const pointEngine = require('../pointEngine')
+const pointHistoryOpenEngine = require('../pointHistoryOpenEngine')
 
 const quantityText = (item) => {
   let diffText
@@ -14,7 +15,16 @@ const quantityText = (item) => {
     diffQuantityText = (diffQuantity > 0 && diffQuantity < 30) ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : null
   }
 
-  return diffQuantityText || `庫存 ${item.quantity} 份（尚未開賣）`
+  let predictText = '尚未開賣'
+  if (!diffQuantityText) {
+    const p = pointHistoryOpenEngine.findOneByCode(item.code)
+    const nowTime = new Date().getHours() * 60 + new Date().getMinutes()
+    if (p && p.predictTime && p.predictTime > nowTime) {
+      predictText = `預測 ${p.predictText} 開賣`
+    }
+  }
+
+  return diffQuantityText || `庫存 ${item.quantity} 份（${predictText}）`
 }
 
 module.exports = async (event, {
