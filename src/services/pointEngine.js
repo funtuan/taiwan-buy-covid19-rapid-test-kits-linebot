@@ -91,7 +91,7 @@ class PointEngine {
     limit = 3,
   }) {
     return points
-        .filter((one) => one.quantity > 0)
+        // .filter((one) => one.quantity > 0)
         .slice(start, start + limit)
   }
 
