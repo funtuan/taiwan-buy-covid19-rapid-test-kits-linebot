@@ -61,9 +61,9 @@ module.exports = async (event, {
           }),
         },
         {
-          'type': 'uri',
+          'type': 'message',
           'label': '打電話店家',
-          'uri': `tel:${point.phone}`,
+          'text': `@請體諒藥局人員，非必要請勿撥打電話\n${point.name} ${point.phone}`,
         },
         {
           'type': 'postback',
