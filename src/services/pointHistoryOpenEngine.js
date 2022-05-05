@@ -85,11 +85,14 @@ class PointHistoryOpenEngine {
   }
 
   findOneByCode(code) {
+    console.log('[PointHistoryOpenEngine] findOneByCode', code)
     return this.pointPointHistoryOpens.find((one) => one.code === code)
   }
 
   init() {
-    this.loadData()
+    setTimeout(() => {
+      this.loadData()
+    }, 10 * 1000)
 
     Cron('45 3 * * * *', () => {
       this.loadData()
