@@ -15,7 +15,7 @@ class PointHistoryOpenEngine {
     this.maxHistoryDiff = 30 * 60 * 1000
     this.allowHistoryCount = 5
     this.allowTotalQuantity = 10
-    this.predictMaxSD = 10
+    this.predictMaxSD = 30
     this.predictMinCount = 4
   }
 
