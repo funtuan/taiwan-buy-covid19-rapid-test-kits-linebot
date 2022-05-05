@@ -105,7 +105,7 @@ class PointHistoryOpenEngine {
 
       index++
       if (index % 20 === 0) {
-        await wait(10)
+        // await wait(10)
       }
     }
 
@@ -120,7 +120,9 @@ class PointHistoryOpenEngine {
   }
 
   init() {
-    this.loadData()
+    setTimeout(() => {
+      this.loadData()
+    }, 15 * 1000)
 
     Cron('45 3 * * * *', () => {
       this.loadData()
