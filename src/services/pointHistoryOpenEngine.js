@@ -8,7 +8,7 @@ class PointHistoryOpenEngine {
     this.pointPointHistoryOpens = []
     this.maxDay = 8
     this.maxQuantiyDiff = 10
-    this.maxHistoryDiff = 120 * 60 * 1000
+    this.maxHistoryDiff = 30 * 60 * 1000
     this.allowHistoryCount = 5
     this.allowTotalQuantity = 10
   }
