@@ -24,6 +24,6 @@ module.exports = async (event, {
 
   await event.reply([{
     type: 'text',
-    text: `${point.name} 歷史開賣時間\n${point.openHistory.map((one) => `${dayjs(one.startDate).format('MM/DD 在 HH:mm')} 開賣`).join('\n')}`,
+    text: `${point.name} 歷史開賣時間\n${point.openHistory.map((one) => `${dayjs(one.startDate).format('MM/DD 在 HH:mm')} 開賣`).join('\n') || '無紀錄'}`,
   }])
 }

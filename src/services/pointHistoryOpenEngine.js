@@ -4,17 +4,14 @@ const dayjs = require('dayjs')
 const Cron = require('croner')
 const Point = require('../models/Point')
 
-const wait = (delay = 0) =>
-  new Promise((resolve) => setTimeout(resolve, delay))
-
 class PointHistoryOpenEngine {
   constructor() {
     this.pointPointHistoryOpens = []
-    this.maxDay = 8
-    this.maxQuantiyDiff = 10
-    this.maxHistoryDiff = 30 * 60 * 1000
+    this.maxDay = 7
+    this.maxQuantiyDiff = 30
+    this.maxHistoryDiff = 20 * 60 * 1000
     this.allowHistoryCount = 5
-    this.allowTotalQuantity = 10
+    this.allowTotalQuantity = 25
     this.predictMaxSD = 15
     this.predictMinCount = 4
   }
