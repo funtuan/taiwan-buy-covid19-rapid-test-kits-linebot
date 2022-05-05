@@ -42,6 +42,15 @@ module.exports = async (event, {
       'text': `${point.name}\n${quantityText(point)}${point.note.length > 1 ? `\n※ ${point.note}` : ''}`.slice(0, 159),
       'actions': [
         {
+          'type': 'postback',
+          'label': '歷史開賣時間',
+          'text': `@查看歷史開賣時間 ${point.name}`,
+          'data': JSON.stringify({
+            'action': 'showOpenHistory',
+            'code': point.code,
+          }),
+        },
+        {
           'type': 'uri',
           'label': '打電話店家',
           'uri': `tel:${point.phone}`,

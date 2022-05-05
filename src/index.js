@@ -7,3 +7,4 @@ if (process.env.CRAWLER !== 'false') {
   require('./services/pointData')()
 }
 require('./services/pointEngine').init()
+require('./services/pointHistoryOpenEngine').init()
