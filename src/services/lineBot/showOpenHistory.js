@@ -7,9 +7,11 @@ module.exports = async (event, {
   code,
 }) => {
   if (!event.source || !event.source.userId || event.type !== 'postback') {
-    console.log('[showLocationByCode] event is not valid', event)
+    console.log('[showOpenHistory] event is not valid', event)
     return
   }
+
+  console.log('[showOpenHistory] showOpenHistory', code)
 
   const point = pointHistoryOpenEngine.findOneByCode(code)
   if (!point) {
