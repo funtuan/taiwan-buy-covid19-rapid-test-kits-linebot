@@ -10,6 +10,7 @@ class PointHistoryOpenEngine {
     this.maxQuantiyDiff = 10
     this.maxHistoryDiff = 120 * 60 * 1000
     this.allowHistoryCount = 5
+    this.allowTotalQuantity = 10
   }
 
   async loadData() {
@@ -60,7 +61,7 @@ class PointHistoryOpenEngine {
           historyCount++
           totalQuantity += lastHistoryQuantity - one.quantity
         } else {
-          if (historyCount >= this.allowHistoryCount) {
+          if (historyCount >= this.allowHistoryCount && totalQuantity > this.allowTotalQuantity) {
             addPointPointHistoryOpen({
               point,
               startDate: startHistoryUpdateDate,
