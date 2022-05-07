@@ -474,7 +474,7 @@ module.exports = ({
           },
           {
             'type': 'text',
-            'text': '附近5公里',
+            'text': '僅顯示有庫存或當日尚未開賣地點',
             'size': 'sm',
             'color': '#999999',
             'flex': 0,
