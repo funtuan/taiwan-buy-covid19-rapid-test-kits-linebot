@@ -16,7 +16,7 @@ const quantityTemplate = (item) => {
     diffQuantityText = (diffQuantity > 0 && diffQuantity < 30) ? `${diffText} 售出${diffQuantity}份（剩${item.quantity}份）` : null
   }
 
-  let predictText = '尚未開賣'
+  let predictText = '還未開賣'
   if (!diffQuantityText) {
     const p = pointHistoryOpenEngine.findOneByCode(item.code)
     const nowTime = new Date().getHours() * 60 + new Date().getMinutes()
